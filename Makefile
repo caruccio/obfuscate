@@ -7,8 +7,11 @@ all build:
 	fi
 	g++ main.cpp -D PASSWORD=\"$$PASSWORD\" -o obfuscate
 
-e encrypt:
+encrypt:
 	@echo "$$TOKEN" | openssl enc -e -aes-256-cbc -base64 -k $(shell ./obfuscate) -iter 1000
 
-d decrypt:
+decrypt:
 	@echo "$$TOKEN" | openssl enc -d -aes-256-cbc -base64 -k $(shell ./obfuscate) -iter 1000
+
+clean-decrypt:
+	@echo "$$TOKEN" | openssl enc -d -aes-256-cbc -base64 -k $(shell ./obfuscate --delete) -iter 1000
